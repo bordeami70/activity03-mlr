@@ -6,3 +6,48 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r eval = FALSE, echo = FALSE}
+autos <- read_csv("Automobile.csv")
+
+```
+Is this an observational study or an experiment?
+I believe this is from an oobservational study
+
+
+You will need to create appropriate univariate graphs to help in answering this:
+
+Describe the distribution of your response variable. Is the distribution skewed? Are there any other interesting/odd features (outliers, multiple peaks, etc.)? What does that tell you about countries’ personal freedoms? Is this what you expected to see? Why, or why not?
+```{r}
+ggplot(autos, aes(x = mpg)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 30) +
+  labs(x = "mpg", y = "Frequency", title = "Distribution of mpg in Autos dataset")
+```
+
+
+
+
+Excluding your response variable, select two other numeric variables (hint: look for <dbl> or <int> designations) and describe their relationship with each other using an appropriate visualization.
+
+```{r}
+ggplot(autos, aes(x = weight, y = horsepower)) +
+  geom_point(color = "#2E8B57", size = 3, alpha = 0.7) +
+  labs(x = "Weight", y = "Horsepower", title = "Scatter Plot of Weight vs. Horsepower") +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "lightgray"),
+    panel.grid.major = element_line(color = "white"),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    axis.title = element_text(color = "black", size = 12, face = "bold"),
+    plot.title = element_text(size = 14, face = "bold")
+  )
+
+```
+```{r}
+autos %>% 
+  select(mpg, weight, horsepower) %>% 
+  ggpairs()
+```
+
